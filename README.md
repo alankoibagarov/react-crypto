@@ -3,6 +3,8 @@
 This application is created for demo purposes.
 Tech stack: TypeScript, React, React-Query, Axios, Zustand, Vite, Github Pages, EsLint, Prettier
 
+If you are using VSCode, it's better to install Prettier and Eslint extensions
+
 Currently, two pages are available:
 
 - Main page with expanding cryptocurrency table
