@@ -1,7 +1,7 @@
 # React Crypto App
 
 This application is created for demo purposes.
-Tech stack: TypeScript, React, React-Query, Axios, Zustand, Vite, Github Pages, EsLint, Prettier  
+Tech stack: TypeScript, React, React-Query, Axios, Zustand, Vite, Github Pages, EsLint, Prettier
 
 Currently, two pages are available:
 
@@ -16,6 +16,7 @@ Currently, two pages are available:
 ```
 
 ## Authorization
+
 Authorization is currently done locally and has only one user:
 Login: admin@crypto.com
 Password: 123456
