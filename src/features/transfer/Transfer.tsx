@@ -6,12 +6,14 @@ import { useQuery } from '@tanstack/react-query';
 import { SwapIcon } from '../../shared/ui/Icons/SwapIcon';
 import { useUserStore } from '../../shared/store/userStore';
 import { Button } from '../../shared/ui/Button/Button';
+import { useToast } from '../../shared/ui/Toast/Toast';
 
 export const Transfer: FC = () => {
   const user = useUserStore((state) => state.user);
 
   const fullAssetList = useAssetStore((state) => state.fullAssetList);
   const setFullAssetList = useAssetStore((state) => state.setFullAssetList);
+  const toast = useToast();
 
   const [fromAmount, setFromAmount] = useState<number>(1);
   const [fromCurrency, setFromCurrency] = useState<string>('');
@@ -28,6 +30,7 @@ export const Transfer: FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      console.log('Success:', data);
       setFullAssetList([...fullAssetList, ...data]);
     }
   }, [isSuccess]);
@@ -69,7 +72,7 @@ export const Transfer: FC = () => {
       !fromCurrency ||
       !toCurrency
     ) {
-      alert('Please enter a valid amount and select both currencies.');
+      toast.error('Please enter a valid amount and select both currencies.');
       return;
     }
 
@@ -80,11 +83,12 @@ export const Transfer: FC = () => {
       const result =
         (Number(fromAmount) * fromCoin.current_price) / toCoin.current_price;
       setConvertedAmount(result);
-      alert(
-        `Converted ${fromAmount} ${fromCoin?.symbol.toUpperCase() || ''} to ${Number(convertedAmount).toLocaleString('en-US', { maximumFractionDigits: 3 })} ${toCoin?.symbol.toUpperCase() || ''}`
+
+      toast.success(
+        `Successfully converted ${fromAmount} ${fromCoin.symbol.toUpperCase()} to ${result.toFixed(6)} ${toCoin.symbol.toUpperCase()}`
       );
     } else {
-      alert('Selected currencies not found.');
+      toast.error('Selected currencies not found.');
       setConvertedAmount(null);
     }
   };
@@ -152,7 +156,7 @@ export const Transfer: FC = () => {
             value={
               convertedAmount !== null
                 ? convertedAmount.toLocaleString(undefined, {
-                    maximumFractionDigits: 3,
+                    maximumFractionDigits: 6,
                   })
                 : ''
             }
@@ -163,11 +167,7 @@ export const Transfer: FC = () => {
         </div>
       </div>
 
-      <Button
-        className={styles.convertButton}
-        disabled={!user}
-        onClick={handleConvert}
-      >
+      <Button variant={'primary'} disabled={!user} onClick={handleConvert}>
         Convert
       </Button>
 
@@ -179,7 +179,7 @@ export const Transfer: FC = () => {
             ?.symbol.toUpperCase() || ''}{' '}
           is{' '}
           {convertedAmount.toLocaleString('en-US', {
-            maximumFractionDigits: 3,
+            maximumFractionDigits: 6,
           })}{' '}
           {fullAssetList
             .find((c) => c.id === toCurrency)

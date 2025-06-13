@@ -30,7 +30,7 @@ export const Button: FC<ButtonProps> = ({
       className={[
         styles.button,
         getButtonColor(variant),
-        active ? styles.active : styles.secondary,
+        active ? styles.active : getButtonColor(variant),
         className,
       ]
         .join(' ')
