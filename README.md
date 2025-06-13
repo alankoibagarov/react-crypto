@@ -15,7 +15,7 @@ Currently, two pages are available:
   npm run dev
 ```
 
-##Authorization
+## Authorization
 Authorization is currently done locally and has only one user:
 Login: admin@crypto.com
 Password: 123456
